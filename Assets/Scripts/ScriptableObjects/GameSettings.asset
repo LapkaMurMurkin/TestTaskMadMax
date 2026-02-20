@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf863733712ebf45b04763ebf93fd84, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  <PlatformHeight>k__BackingField: 300
-  <HorizontalMovementBounds>k__BackingField: {x: -500, y: 500}
-  <HorizontalMovementDuration>k__BackingField: 3
-  <JumpBigPeak>k__BackingField: 50
-  <JumpSmallPeak>k__BackingField: -50
-  <JumpUpDuration>k__BackingField: 0.3
-  <JumpFallDuration>k__BackingField: 0.4
-  <JumpHoldThreshold>k__BackingField: 0.5
+  _platformHeight: 500
+  _enemyStartSpeed: 6
+  _enemyMaxSpeed: 2
+  _platformToReachMaxSpeed: 20
+  _enemySpawnChance: 0.5
+  _horizontalMovementBounds: {x: -500, y: 500}
+  _horizontalMovementDuration: 3
+  _jumpBigPeak: 50
+  _jumpBigUpDuration: 0.3
+  _jumpBigFallDuration: 0.4
+  _jumpSmallPeak: -75
+  _jumpSmallUpDuration: 0.2
+  _jumpSmallFallDuration: 0.2
+  _jumpHoldThreshold: 0.2
