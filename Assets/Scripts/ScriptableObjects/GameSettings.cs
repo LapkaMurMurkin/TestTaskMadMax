@@ -5,6 +5,9 @@ namespace TestTaskMadMax.ScriptableObjects
     [CreateAssetMenu(fileName = "GameSettings", menuName = "ScriptableObjects")]
     public class GameSettings : ScriptableObject
     {
+        [Header("Сфьукф")]
+        [SerializeField] private float _sceneWidthUnits = 10f;
+
         [Header("Platform")]
         [SerializeField] private int _platformHeight = 200;
 
@@ -31,6 +34,8 @@ namespace TestTaskMadMax.ScriptableObjects
 
         [Header("Input")]
         [SerializeField] private float _jumpHoldThreshold = 0.2f;
+
+        public float SceneWidthUnits => _sceneWidthUnits;
 
         public int PlatformHeight => _platformHeight;
 

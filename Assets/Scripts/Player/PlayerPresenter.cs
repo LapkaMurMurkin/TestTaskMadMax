@@ -88,15 +88,54 @@ namespace TestTaskMadMax.Player
 
         private void StartHorizontalMovementLoop()
         {
-            float startPosition = _gameSettings.HorizontalMovementBounds.x;
-            float endPosition = _gameSettings.HorizontalMovementBounds.y;
+            float left = _gameSettings.HorizontalMovementBounds.x;
+            float right = _gameSettings.HorizontalMovementBounds.y;
+            float duration = _gameSettings.HorizontalMovementDuration / 2f;
+            float rotateDuration = 0.4f; // время поворота Y
+            float zTilt = -30f; // наклон при повороте
 
-            _playerCar.position = new Vector3(startPosition, _playerCar.position.y, _playerCar.position.z);
+            // Начальная позиция и поворот
+            _playerCar.position = new Vector3(left, _playerCar.position.y, _playerCar.position.z);
+            _playerCar.rotation = Quaternion.Euler(0, 0, 0);
 
             _moveXAnim?.Kill();
-            _moveXAnim = _playerCar.DOMoveX(endPosition, _gameSettings.HorizontalMovementDuration / 2)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo);
+
+            Sequence _moveSequence = DOTween.Sequence();
+
+            // --- движение вправо ---
+            var moveRight = _playerCar.DOMoveX(right, duration).SetEase(Ease.InOutSine);
+            var rotateRight = _playerCar.DORotate(new Vector3(0, 180, 0), rotateDuration);
+            var tiltRightUp = _playerCar.DOLocalRotate(new Vector3(0, 180, zTilt), rotateDuration);
+            var tiltRightDown = _playerCar.DOLocalRotate(new Vector3(0, 180, 0), duration - rotateDuration).SetEase(Ease.OutSine);
+
+            _moveSequence.Append(moveRight);
+            _moveSequence.Join(rotateRight);
+            _moveSequence.Join(tiltRightUp);
+            _moveSequence.Insert(rotateDuration, tiltRightDown);
+
+            // --- движение влево ---
+            var moveLeft = _playerCar.DOMoveX(left, duration).SetEase(Ease.InOutSine);
+            var rotateLeft = _playerCar.DORotate(new Vector3(0, 0, 0), rotateDuration);
+            var tiltLeftUp = _playerCar.DOLocalRotate(new Vector3(0, 0, zTilt), rotateDuration);
+            var tiltLeftDown = _playerCar.DOLocalRotate(new Vector3(0, 0, 0), duration - rotateDuration).SetEase(Ease.OutSine);
+
+            _moveSequence.Append(moveLeft);
+            _moveSequence.Join(rotateLeft);
+            _moveSequence.Join(tiltLeftUp);
+            _moveSequence.Insert(duration + rotateDuration, tiltLeftDown);
+
+            _moveSequence.SetLoops(-1, LoopType.Restart);
+            _moveXAnim = _moveSequence;
+
+            /*             float startPosition = _gameSettings.HorizontalMovementBounds.x;
+                        float endPosition = _gameSettings.HorizontalMovementBounds.y;
+
+                        _playerCar.position = new Vector3(startPosition, _playerCar.position.y, _playerCar.position.z);
+
+                        _moveXAnim?.Kill();
+                        _moveXAnim = _playerCar.DOMoveX(endPosition, _gameSettings.HorizontalMovementDuration / 2)
+                            .SetEase(Ease.InOutSine)
+                            .SetLoops(-1, LoopType.Yoyo); */
         }
 
         private void Jump(InputAction.CallbackContext context)
@@ -150,6 +189,8 @@ namespace TestTaskMadMax.Player
                 if (invokeLand) OnJumpLand?.Invoke();
             })
             .Play();
+
+            OnJump?.Invoke();
         }
     }
 }

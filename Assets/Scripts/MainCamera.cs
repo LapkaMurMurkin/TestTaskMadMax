@@ -22,6 +22,9 @@ namespace TestTaskMadMax
             _gameSettings = gameSettings;
             _camera = camera;
 
+            float aspect = (float)Screen.width / Screen.height;
+            _camera.orthographicSize = _gameSettings.SceneWidthUnits / (2f * aspect);
+
             _camera.transform.position = new Vector3(0, _camera.orthographicSize, -200);
         }
 

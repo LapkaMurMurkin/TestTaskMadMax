@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf863733712ebf45b04763ebf93fd84, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  _sceneWidthUnits: 1080
   _platformHeight: 500
   _enemyStartSpeed: 6
   _enemyMaxSpeed: 2
@@ -22,7 +23,7 @@ MonoBehaviour:
   _jumpBigPeak: 50
   _jumpBigUpDuration: 0.3
   _jumpBigFallDuration: 0.4
-  _jumpSmallPeak: -75
+  _jumpSmallPeak: -200
   _jumpSmallUpDuration: 0.2
   _jumpSmallFallDuration: 0.2
   _jumpHoldThreshold: 0.2

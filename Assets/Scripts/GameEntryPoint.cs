@@ -25,6 +25,7 @@ namespace TestTaskMadMax
         [SerializeField] private MainScreen _mainScreen;
         [SerializeField] private LooseScreen _looseScreen;
 
+        [SerializeField] private Sound _sound;
 
         private GameModel _gameModel;
         private ActionMap _actionMap;
@@ -74,6 +75,7 @@ namespace TestTaskMadMax
         {
             _mainScreen.Initialize(_gameModel);
             _looseScreen.Initialize(_gameModel, _actionMap, RestartGame, _player);
+            _sound.Initialize(_player);
         }
 
         private void Update()
